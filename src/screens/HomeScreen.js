@@ -735,7 +735,6 @@ export default function HomeScreen() {
 
         <View testID="foodList">
             <Recipe categories={categories} foods={filteredfoods} />
-            
         </View>
       </ScrollView>
     </View>
