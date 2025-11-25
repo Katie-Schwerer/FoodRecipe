@@ -24,7 +24,7 @@ import {
       const fetchrecipes = async () => {
         const storedRecipes = await AsyncStorage.getItem("customRecipes");
         if (storedRecipes) {
-          setrecipes(JSON.parse(storedArticles));
+          setrecipes(JSON.parse(storedRecipes));
         }
         setLoading(false);
       };
@@ -75,17 +75,25 @@ import {
               recipes.map((recipe, index) => (
                 <View key={index} style={styles.recipeCard} testID="recipeCard">
                   <TouchableOpacity testID="handlerecipeBtn" onPress={() => handlerecipeClick(recipe)}>
-                  
+                    {recipe.image && (
+                        <Image
+                          source={{uri: recipe.image}}
+                          style={styles.recipeImage}
+                        />
+                    )}
                     <Text style={styles.recipeTitle}>{recipe.title}</Text>
-                    <Text style={styles.recipeDescription} testID="recipeDescp">
-                  
-                    </Text>
                   </TouchableOpacity>
   
                   {/* Edit and Delete Buttons */}
                   <View style={styles.actionButtonsContainer} testID="editDeleteButtons">
-                    
-                
+                    <TouchableOpacity onPress={() => editrecipe(recipe, index)}
+                    style={styles.editButton}
+                    >
+                        <Text style={styles.editButtonText}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => deleterecipe(index)} style={styles.deleteButton}>
+                        <Text style={styles.deleteButtonText}>Delete</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               ))
@@ -140,7 +148,7 @@ import {
     },
     recipeCard: {
       width: 400, // Make recipe card width more compact
-      height: 300, // Adjust the height of the card to fit content
+      height: 400, // Adjust the height of the card to fit content
       backgroundColor: "#fff",
       padding: wp(3),
       borderRadius: 8,

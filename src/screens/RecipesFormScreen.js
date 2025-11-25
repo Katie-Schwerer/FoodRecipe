@@ -12,7 +12,7 @@ export default function RecipesFormScreen({ route, navigation }) {
   );
 
   const saverecipe = async () => {
-    const newRecipe = {title, image, image};
+    const newRecipe = {title, image, description};
     try {
         const existingRecipes = await AsyncStorage.getItem("customRecipes");
         const recipes = existingRecipes ? JSON.parse(existingRecipes) : [];
@@ -27,7 +27,9 @@ export default function RecipesFormScreen({ route, navigation }) {
       }
 
       navigation.goBack(); // Return to the previous screen
-    } 
+    } catch (error) {
+      console.error("Error saving the recipe:", error);
+    }
   };
 
   return (
